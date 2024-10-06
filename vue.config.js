@@ -8,4 +8,9 @@ module.exports = defineConfig({
       },
     },
   },
+  // Add the publicPath option for correct asset paths
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/DrohneDashboard/'  // This should match your GitHub repo name
+    : '/'
+
 });
