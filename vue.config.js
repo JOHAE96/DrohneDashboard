@@ -1,6 +1,5 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
-  base: "DrohneDashboard",
   transpileDependencies: true,
   css: {
     loaderOptions: {
