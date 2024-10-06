@@ -16,10 +16,10 @@ const props = defineProps({
 onMounted(async () => {
   map.value = setupMap();
 
-  const minLat = 50.919268;
-  const minLng = 11.58248;
-  const maxLat = 50.934679;
-  const maxLng = 11.602226;
+  const minLat = props.bbox.split(",")[0];
+  const minLng = props.bbox.split(",")[1];
+  const maxLat = props.bbox.split(",")[2];
+  const maxLng = props.bbox.split(",")[3];
 
   console.log(props.bbox);
 
@@ -40,6 +40,6 @@ onMounted(async () => {
 <style lang="scss">
 #map {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
 }
 </style>
