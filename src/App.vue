@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <router-view />
+    <DrohneDashboard />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import DrohneDashboard from "./views/DrohneDashboard.vue";
+</script>
 
 <style>
 #app {
