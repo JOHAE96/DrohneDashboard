@@ -1,5 +1,6 @@
 import L from "leaflet";
 import { markerOption } from "./customMarker";
+import spotsToFly from "../spotsToFly";
 
 export const setupMap = () => {
   const map = L.map("map", {
@@ -10,12 +11,13 @@ export const setupMap = () => {
     attribution: "&copy; OpenStreetMap contributors",
   }).addTo(map);
 
-  L.marker([50.927487905728235, 11.594333244037017], markerOption)
-    .addTo(map)
-    .bindPopup("Landfeste");
-  L.marker([50.92312263435002, 11.586930178792763], markerOption)
-    .addTo(map)
-    .bindPopup("Hängemattenspot");
+  spotsToFly.forEach((spot) => {
+    addMarker(map, spot.coorinades, spot.name);
+  });
 
   return map;
+};
+
+const addMarker = (map, coorinades, name) => {
+  L.marker(coorinades, markerOption).addTo(map).bindPopup(name);
 };

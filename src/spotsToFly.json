@@ -1,0 +1,44 @@
+[
+    {
+        "coorinades": [
+            50.927487905728235,
+            11.594333244037017
+        ],
+        "name": "Landfeste"
+    },
+    {
+        "coorinades": [
+            50.92312263435002,
+            11.586930178792763
+        ],
+        "name": "Hängemattenspot"
+    },
+    {
+        "coorinades": [
+            50.88362138175022,
+            11.583493346378646
+        ],
+        "name": "Hängemattenspot Steinbruch"
+    },
+    {
+        "coorinades": [
+            50.91545456972983,
+            11.639611242095874
+        ],
+        "name": "Lagerfeuerstelle Steinkreuz"
+    },
+    {
+        "coorinades": [
+            50.961433959974904,
+            11.596064577682904
+        ],
+        "name": "Lagerfeuerstelle Jägerberg"
+    },
+    {
+        "coorinades": [
+            50.8930553631405,
+            11.617492582771131
+        ],
+        "name": "Lagerfeuerstelle unter der Lobdeburg"
+    }
+]
