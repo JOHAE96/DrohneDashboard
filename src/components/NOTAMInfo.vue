@@ -1,18 +1,36 @@
 <template>
-  <div class="border-sm p-5 border-gray-900 rounded-md bg-blue-400">
-    <h1 class="font-bold text-2xl">NOTAM</h1>
-    <p>{{ infoText }}</p>
+  <div
+    class="border-sm p-5 border-gray-900 rounded-md"
+    :class="{
+      'bg-green-400': notamState === 'free',
+      'bg-yellow-400': notamState === 'loading',
+      'bg-red-400': notamState === 'not-free',
+    }"
+  >
+    <h1 class="text-xl">NOTAM</h1>
+    <p class="font-bold text-2xl">{{ infoText }}</p>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { computed, defineProps, ref } from "vue";
 
 const props = defineProps({
   bbox: String,
 });
 
-const infoText = ref("No NOTAM available");
+const infoText = ref("Checking for NOTAMs...");
+
+const notamState = computed(() => {
+  switch (infoText.value.trim()) {
+    case "Checking for NOTAMs...":
+      return "loading";
+    case "no features were found":
+      return "free";
+    default:
+      return "not-free";
+  }
+});
 
 const url = `https://uas-betrieb.de/geoservices/dipul/wms?i=400
 &j=60
