@@ -47,5 +47,19 @@
             11.571448611999186
         ],
         "name": "Napoleonstein"
+    },
+    {
+        "coorinades": [
+            50.94436977914329,
+            11.615456023084397
+        ],
+        "name": "Garten bei Schloss Talstein"
+    },
+    {
+        "coorinades": [
+            50.90951473191222,
+            11.577504724149888
+        ],
+        "name": "Aussichtsturm Park"
     }
 ]

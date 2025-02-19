@@ -9,12 +9,14 @@ import "leaflet/dist/leaflet.css";
 import { setupMap } from "@/helper";
 const map = ref(null);
 
+const showCamera = false;
+
 const props = defineProps({
   bbox: String,
 });
 
 onMounted(async () => {
-  map.value = setupMap();
+  map.value = setupMap(showCamera);
 
   const minLat = props.bbox.split(",")[0];
   const minLng = props.bbox.split(",")[1];
@@ -32,7 +34,10 @@ onMounted(async () => {
     opacity: 0.8,
   };
   var imageOverlay = L.imageOverlay(imageUrl, latLngBounds, options);
-  imageOverlay.addTo(map.value);
+
+  if (!showCamera) {
+    imageOverlay.addTo(map.value);
+  }
   map.value.fitBounds(latLngBounds);
 });
 </script>
