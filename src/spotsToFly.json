@@ -61,5 +61,12 @@
             11.577504724149888
         ],
         "name": "Aussichtsturm Park"
+    },
+    {
+        "coorinades": [
+            50.92714762576274,
+            11.572229553744792
+        ],
+        "name": "Friedensberg"
     }
 ]
