@@ -68,5 +68,22 @@
             11.572229553744792
         ],
         "name": "Friedensberg"
+    },    {
+        "coorinades": [
+50.92459269230626, 11.583644263014097
+        ],
+        "name": "Hinterhof Spot"
+    },
+    {
+        "coorinades": [
+            50.92439757412848, 11.616580631847226
+        ],
+        "name": "Aussichtspunkt Wüstung Königspfalz Kirchberg"
+    },
+    {
+        "coorinades": [
+            50.922622564004406, 11.64211709226464
+        ],
+        "name": "Aussichtspunkt Gembdenbach"
     }
 ]
