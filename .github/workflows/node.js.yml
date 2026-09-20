@@ -11,6 +11,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install and Build 🔧
+        working-directory: drohne-dashboard
         run: |
           npm ci
           npm run build
@@ -18,4 +19,4 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # The folder the action should deploy.
+          folder: drohne-dashboard/dist # The folder the action should deploy.

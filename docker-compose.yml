@@ -1,0 +1,6 @@
+services:
+  discord-bot:
+    build: ./discord-bot
+    restart: unless-stopped
+    env_file:
+      - ./discord-bot/.env

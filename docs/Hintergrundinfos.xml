@@ -1,0 +1,1003 @@
+<?xml version="1.0" encoding="UTF-8"?><WMS_Capabilities version="1.3.0" updateSequence="942" xmlns="http://www.opengis.net/wms" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wms https://uas-betrieb.de/geoservices/schemas/wms/1.3.0/capabilities_1_3_0.xsd">
+  <Service>
+    <Name>WMS</Name>
+    <Title>DIPUL WMS</Title>
+    <Abstract>Web-Map-Service bereitgestellt durch DIPUL.</Abstract>
+    <KeywordList/>
+    <OnlineResource xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/"/>
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson>Bitte nutzen Sie das Kontaktformular unter https://dipul.de/homepage/de/kontakt/.</ContactPerson>
+        <ContactOrganization/>
+      </ContactPersonPrimary>
+      <ContactPosition/>
+      <ContactAddress>
+        <AddressType/>
+        <Address/>
+        <City/>
+        <StateOrProvince/>
+        <PostCode/>
+        <Country/>
+      </ContactAddress>
+      <ContactVoiceTelephone/>
+      <ContactFacsimileTelephone/>
+      <ContactElectronicMailAddress/>
+    </ContactInformation>
+    <Fees>Die Daten sind unter der Lizenz CC BY-ND 4.0 International urheberrechtlich geschützt. Bitte beachten Sie die Nutzungsbedingungen unter https://dipul.de/homepage/de/informationen/geografische-gebiete/wfs-wms/.</Fees>
+    <AccessConstraints>none</AccessConstraints>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>text/xml</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?SERVICE=WMS&amp;"/>
+            </Get>
+            <Post>
+              <OnlineResource xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?SERVICE=WMS&amp;"/>
+            </Post>
+          </HTTP>
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/png</Format>
+        <Format>image/gif</Format>
+        <Format>image/jpeg</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>text/plain</Format>
+        <Format>text/html</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetFeatureInfo>
+    </Request>
+    <Exception>
+      <Format>XML</Format>
+      <Format>INIMAGE</Format>
+      <Format>BLANK</Format>
+      <Format>JSON</Format>
+    </Exception>
+    <Layer>
+      <Title>DIPUL WMS</Title>
+      <Abstract>Web-Map-Service bereitgestellt durch DIPUL.</Abstract>
+      <!--Limited list of EPSG projections:-->
+      <CRS>EPSG:4326</CRS>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:7789</CRS>
+      <CRS>CRS:84</CRS>
+      <EX_GeographicBoundingBox>
+        <westBoundLongitude>3.63560579</westBoundLongitude>
+        <eastBoundLongitude>15.04191978</eastBoundLongitude>
+        <southBoundLatitude>47.27011138</southBoundLatitude>
+        <northBoundLatitude>55.81059332</northBoundLatitude>
+      </EX_GeographicBoundingBox>
+      <BoundingBox CRS="CRS:84" minx="3.63560579" miny="47.27011138" maxx="15.04191978" maxy="55.81059332"/>
+      <Layer queryable="1" opaque="0">
+        <Name>bahnanlagen</Name>
+        <Title>Bahnanlagen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>bahnanlagen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.02264174</westBoundLongitude>
+          <eastBoundLongitude>15.03371325</eastBoundLongitude>
+          <southBoundLatitude>47.39688661</southBoundLatitude>
+          <northBoundLatitude>54.90808871</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.02264174" miny="47.39688661" maxx="15.03371325" maxy="54.90808871"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.39688661" miny="6.02264174" maxx="54.90808871" maxy="15.03371325"/>
+        <Style>
+          <Name>schienenverkehr_zone</Name>
+          <Title>Schienenverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=bahnanlagen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>behoerden</Name>
+        <Title>Oberste Bundes- und Landesbehörden und Verfassungsorgane</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>behoerden</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.06570911</westBoundLongitude>
+          <eastBoundLongitude>14.98339889</eastBoundLongitude>
+          <southBoundLatitude>47.48662931</southBoundLatitude>
+          <northBoundLatitude>54.82002298</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.06570911" miny="47.48662931" maxx="14.98339889" maxy="54.82002298"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.48662931" miny="6.06570911" maxx="54.82002298" maxy="14.98339889"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=behoerden"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>binnenwasserstrassen</Name>
+        <Title>Binnenwasserstraßen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>binnenwasserstrassen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.0609829</westBoundLongitude>
+          <eastBoundLongitude>14.76028346</eastBoundLongitude>
+          <southBoundLatitude>47.58865064</southBoundLatitude>
+          <northBoundLatitude>54.3804317</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.0609829" miny="47.58865064" maxx="14.76028346" maxy="54.3804317"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.58865064" miny="6.0609829" maxx="54.3804317" maxy="14.76028346"/>
+        <Style>
+          <Name>schiffsverkehr_zone</Name>
+          <Title>Schiffsverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=binnenwasserstrassen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>bundesautobahnen</Name>
+        <Title>Bundesautobahnen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>bundesautobahnen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.02257018</westBoundLongitude>
+          <eastBoundLongitude>15.01022418</eastBoundLongitude>
+          <southBoundLatitude>47.54630988</southBoundLatitude>
+          <northBoundLatitude>54.80674727</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.02257018" miny="47.54630988" maxx="15.01022418" maxy="54.80674727"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.54630988" miny="6.02257018" maxx="54.80674727" maxy="15.01022418"/>
+        <Style>
+          <Name>strassenverkehr_zone</Name>
+          <Title>Strassenverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=bundesautobahnen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>bundesstrassen</Name>
+        <Title>Bundesstraßen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>bundesstrassen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.8753808</westBoundLongitude>
+          <eastBoundLongitude>14.98661682</eastBoundLongitude>
+          <southBoundLatitude>47.38619394</southBoundLatitude>
+          <northBoundLatitude>54.90477461</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.8753808" miny="47.38619394" maxx="14.98661682" maxy="54.90477461"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.38619394" miny="5.8753808" maxx="54.90477461" maxy="14.98661682"/>
+        <Style>
+          <Name>strassenverkehr_zone</Name>
+          <Title>Strassenverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=bundesstrassen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>diplomatische_vertretungen</Name>
+        <Title>Diplomatische und konsularische Vertretungen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>diplomatische_vertretungen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.71208589</westBoundLongitude>
+          <eastBoundLongitude>13.74433051</eastBoundLongitude>
+          <southBoundLatitude>47.99264325</southBoundLatitude>
+          <northBoundLatitude>54.78876342</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.71208589" miny="47.99264325" maxx="13.74433051" maxy="54.78876342"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.99264325" miny="6.71208589" maxx="54.78876342" maxy="13.74433051"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=diplomatische_vertretungen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>ffh-gebiete</Name>
+        <Title>FFH-Gebiete</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>ffh-gebiete</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>3.63560579</westBoundLongitude>
+          <eastBoundLongitude>15.04191978</eastBoundLongitude>
+          <southBoundLatitude>47.27011141</southBoundLatitude>
+          <northBoundLatitude>55.80960272</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="3.63560579" miny="47.27011141" maxx="15.04191978" maxy="55.80960272"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.27011141" miny="3.63560579" maxx="55.80960272" maxy="15.04191978"/>
+        <Style>
+          <Name>naturschutzflaechen_zone</Name>
+          <Title>Naturschutzflaechen Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=ffh-gebiete"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>flugbeschraenkungsgebiete</Name>
+        <Title>Flugbeschränkungsgebiete</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>flugbeschraenkungsgebiete</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.17415278</westBoundLongitude>
+          <eastBoundLongitude>14.974338</eastBoundLongitude>
+          <southBoundLatitude>47.61643956</southBoundLatitude>
+          <northBoundLatitude>54.81942048</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.17415278" miny="47.61643956" maxx="14.974338" maxy="54.81942048"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.61643956" miny="6.17415278" maxx="54.81942048" maxy="14.974338"/>
+        <Style>
+          <Name>luftverkehr_zone</Name>
+          <Title>Luftverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=flugbeschraenkungsgebiete"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>flughaefen</Name>
+        <Title>Flughäfen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>flughaefen</Keyword>
+          <Keyword>features</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.9510332</westBoundLongitude>
+          <eastBoundLongitude>14.24534528</eastBoundLongitude>
+          <southBoundLatitude>47.63711188</southBoundLatitude>
+          <northBoundLatitude>54.96093398</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.9510332" miny="47.63711188" maxx="14.24534528" maxy="54.96093398"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.63711188" miny="5.9510332" maxx="54.96093398" maxy="14.24534528"/>
+        <Style>
+          <Name>luftverkehr_zone</Name>
+          <Title>Luftverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=flughaefen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>flugplaetze</Name>
+        <Title>Flugplätze</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>flugplaetze</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.02286874</westBoundLongitude>
+          <eastBoundLongitude>14.99136907</eastBoundLongitude>
+          <southBoundLatitude>47.47074376</southBoundLatitude>
+          <northBoundLatitude>54.83733635</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.02286874" miny="47.47074376" maxx="14.99136907" maxy="54.83733635"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.47074376" miny="6.02286874" maxx="54.83733635" maxy="14.99136907"/>
+        <Style>
+          <Name>luftverkehr_zone</Name>
+          <Title>Luftverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=flugplaetze"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>freibaeder</Name>
+        <Title>Freibäder und Badestrände</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>freibaeder</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.99530385</westBoundLongitude>
+          <eastBoundLongitude>14.97744674</eastBoundLongitude>
+          <southBoundLatitude>47.38249594</southBoundLatitude>
+          <northBoundLatitude>55.02536561</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.99530385" miny="47.38249594" maxx="14.97744674" maxy="55.02536561"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.38249594" miny="5.99530385" maxx="55.02536561" maxy="14.97744674"/>
+        <Style>
+          <Name>siedlung_zone</Name>
+          <Title>Siedlung Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=freibaeder"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>haengegleiter</Name>
+        <Title>Hängegleiter</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>haengegleiter</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.27266678</westBoundLongitude>
+          <eastBoundLongitude>14.7043902</eastBoundLongitude>
+          <southBoundLatitude>47.39896791</southBoundLatitude>
+          <northBoundLatitude>54.90487406</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.27266678" miny="47.39896791" maxx="14.7043902" maxy="54.90487406"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.39896791" miny="6.27266678" maxx="54.90487406" maxy="14.7043902"/>
+        <Style>
+          <Name>luftverkehr_info</Name>
+          <Title>Luftverkehr Info Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=haengegleiter"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>inaktive_temporaere_betriebseinschraenkungen</Name>
+        <Title>Inaktive temporäre Betriebseinschränkungen</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.98865807458</westBoundLongitude>
+          <eastBoundLongitude>15.0169958839</eastBoundLongitude>
+          <southBoundLatitude>47.3024876979</southBoundLatitude>
+          <northBoundLatitude>54.983104153</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.98865807458" miny="47.3024876979" maxx="15.0169958839" maxy="54.983104153"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.3024876979" miny="5.98865807458" maxx="54.983104153" maxy="15.0169958839"/>
+        <Style>
+          <Name>luftverkehr_info</Name>
+          <Title>Luftverkehr Info Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=inaktive_temporaere_betriebseinschraenkungen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>industrieanlagen</Name>
+        <Title>Industrieanlagen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>industrieanlagen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.9916355</westBoundLongitude>
+          <eastBoundLongitude>15.0024696</eastBoundLongitude>
+          <southBoundLatitude>47.43183954</southBoundLatitude>
+          <northBoundLatitude>54.90824572</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.9916355" miny="47.43183954" maxx="15.0024696" maxy="54.90824572"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.43183954" miny="5.9916355" maxx="54.90824572" maxy="15.0024696"/>
+        <Style>
+          <Name>industrie_zone</Name>
+          <Title>Industrie Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=industrieanlagen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>internationale_organisationen</Name>
+        <Title>Internationale Organisationen im Sinne des Völkerrechts</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>internationale_organisationen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.6683402</westBoundLongitude>
+          <eastBoundLongitude>13.72289043</eastBoundLongitude>
+          <southBoundLatitude>48.12874357</southBoundLatitude>
+          <northBoundLatitude>53.58210211</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.6683402" miny="48.12874357" maxx="13.72289043" maxy="53.58210211"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.12874357" miny="6.6683402" maxx="53.58210211" maxy="13.72289043"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=internationale_organisationen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>justizvollzugsanstalten</Name>
+        <Title>JVA und Einrichtungen des Maßregelvollzugs</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>justizvollzugsanstalten</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.09217541</westBoundLongitude>
+          <eastBoundLongitude>14.98727157</eastBoundLongitude>
+          <southBoundLatitude>47.49640038</southBoundLatitude>
+          <northBoundLatitude>54.78463604</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.09217541" miny="47.49640038" maxx="14.98727157" maxy="54.78463604"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.49640038" miny="6.09217541" maxx="54.78463604" maxy="14.98727157"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=justizvollzugsanstalten"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>kontrollzonen</Name>
+        <Title>Kontrollzonen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>kontrollzonen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.87459167</westBoundLongitude>
+          <eastBoundLongitude>14.25555556</eastBoundLongitude>
+          <southBoundLatitude>47.53594528</southBoundLatitude>
+          <northBoundLatitude>55.0159705</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.87459167" miny="47.53594528" maxx="14.25555556" maxy="55.0159705"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.53594528" miny="5.87459167" maxx="55.0159705" maxy="14.25555556"/>
+        <Style>
+          <Name>kontrollzone_zone</Name>
+          <Title>Kontrollzone Zone Style</Title>
+          <LegendURL width="22" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=kontrollzonen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>kraftwerke</Name>
+        <Title>Kraftwerke</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>kraftwerke</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.30907046</westBoundLongitude>
+          <eastBoundLongitude>14.58930727</eastBoundLongitude>
+          <southBoundLatitude>47.56438848</southBoundLatitude>
+          <northBoundLatitude>54.14656002</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.30907046" miny="47.56438848" maxx="14.58930727" maxy="54.14656002"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.56438848" miny="6.30907046" maxx="54.14656002" maxy="14.58930727"/>
+        <Style>
+          <Name>industrie_zone</Name>
+          <Title>Industrie Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=kraftwerke"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>krankenhaeuser</Name>
+        <Title>Krankenhäuser</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>krankenhaeuser</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.98861002</westBoundLongitude>
+          <eastBoundLongitude>14.98790534</eastBoundLongitude>
+          <southBoundLatitude>47.40893997</southBoundLatitude>
+          <northBoundLatitude>54.92804855</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.98861002" miny="47.40893997" maxx="14.98790534" maxy="54.92804855"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.40893997" miny="5.98861002" maxx="54.92804855" maxy="14.98790534"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=krankenhaeuser"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>labore</Name>
+        <Title>Einrichtungen BSL-4</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>labore</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>8.80317496</westBoundLongitude>
+          <eastBoundLongitude>13.37308129</eastBoundLongitude>
+          <southBoundLatitude>50.80478499</southBoundLatitude>
+          <northBoundLatitude>54.1858661</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="8.80317496" miny="50.80478499" maxx="13.37308129" maxy="54.1858661"/>
+        <BoundingBox CRS="EPSG:4326" minx="50.80478499" miny="8.80317496" maxx="54.1858661" maxy="13.37308129"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=labore"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>militaerische_anlagen</Name>
+        <Title>Militärische Anlagen und Organisationen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>militaerische_anlagen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.01398116</westBoundLongitude>
+          <eastBoundLongitude>14.95833248</eastBoundLongitude>
+          <southBoundLatitude>47.44506384</southBoundLatitude>
+          <northBoundLatitude>54.86315592</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.01398116" miny="47.44506384" maxx="14.95833248" maxy="54.86315592"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.44506384" miny="6.01398116" maxx="54.86315592" maxy="14.95833248"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=militaerische_anlagen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>modellflugplaetze</Name>
+        <Title>Modellflugplätze</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>modellflugplaetze</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.93222571</westBoundLongitude>
+          <eastBoundLongitude>14.95828545</eastBoundLongitude>
+          <southBoundLatitude>47.42216142</southBoundLatitude>
+          <northBoundLatitude>54.88883059</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.93222571" miny="47.42216142" maxx="14.95828545" maxy="54.88883059"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.42216142" miny="5.93222571" maxx="54.88883059" maxy="14.95828545"/>
+        <Style>
+          <Name>luftverkehr_info</Name>
+          <Title>Luftverkehr Info Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=modellflugplaetze"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>nationalparks</Name>
+        <Title>Nationalparks</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>nationalparks</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.26741918</westBoundLongitude>
+          <eastBoundLongitude>14.45052679</eastBoundLongitude>
+          <southBoundLatitude>47.46339581</southBoundLatitude>
+          <northBoundLatitude>55.09917908</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.26741918" miny="47.46339581" maxx="14.45052679" maxy="55.09917908"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.46339581" miny="6.26741918" maxx="55.09917908" maxy="14.45052679"/>
+        <Style>
+          <Name>naturschutzflaechen_zone</Name>
+          <Title>Naturschutzflaechen Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=nationalparks"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>naturschutzgebiete</Name>
+        <Title>Naturschutzgebiete</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>naturschutzgebiete</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>3.63569702</westBoundLongitude>
+          <eastBoundLongitude>14.94141751</eastBoundLongitude>
+          <southBoundLatitude>47.27011141</southBoundLatitude>
+          <northBoundLatitude>55.81059332</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="3.63569702" miny="47.27011141" maxx="14.94141751" maxy="55.81059332"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.27011141" miny="3.63569702" maxx="55.81059332" maxy="14.94141751"/>
+        <Style>
+          <Name>naturschutzflaechen_zone</Name>
+          <Title>Naturschutzflaechen Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=naturschutzgebiete"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>polizei</Name>
+        <Title>Liegenschaften der Polizei</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>polizei</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.90053253</westBoundLongitude>
+          <eastBoundLongitude>14.99986681</eastBoundLongitude>
+          <southBoundLatitude>47.40907531</southBoundLatitude>
+          <northBoundLatitude>54.90936474</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.90053253" miny="47.40907531" maxx="14.99986681" maxy="54.90936474"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.40907531" miny="5.90053253" maxx="54.90936474" maxy="14.99986681"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=polizei"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>schifffahrtsanlagen</Name>
+        <Title>Schifffahrtsanlagen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>schifffahrtsanlagen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.13730743</westBoundLongitude>
+          <eastBoundLongitude>14.65646022</eastBoundLongitude>
+          <southBoundLatitude>48.02029382</southBoundLatitude>
+          <northBoundLatitude>54.37017265</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.13730743" miny="48.02029382" maxx="14.65646022" maxy="54.37017265"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.02029382" miny="6.13730743" maxx="54.37017265" maxy="14.65646022"/>
+        <Style>
+          <Name>schiffsverkehr_zone</Name>
+          <Title>Schiffsverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=schifffahrtsanlagen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>seewasserstrassen</Name>
+        <Title>Seewasserstraßen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>seewasserstrassen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.34434576</westBoundLongitude>
+          <eastBoundLongitude>14.28518602</eastBoundLongitude>
+          <southBoundLatitude>53.39742704</southBoundLatitude>
+          <northBoundLatitude>55.10006496</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.34434576" miny="53.39742704" maxx="14.28518602" maxy="55.10006496"/>
+        <BoundingBox CRS="EPSG:4326" minx="53.39742704" miny="6.34434576" maxx="55.10006496" maxy="14.28518602"/>
+        <Style>
+          <Name>schiffsverkehr_zone</Name>
+          <Title>Schiffsverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=seewasserstrassen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>sicherheitsbehoerden</Name>
+        <Title>Andere Sicherheitsbehörden</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>sicherheitsbehoerden</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.04452974</westBoundLongitude>
+          <eastBoundLongitude>15.00693449</eastBoundLongitude>
+          <southBoundLatitude>47.48685172</southBoundLatitude>
+          <northBoundLatitude>54.9211422</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.04452974" miny="47.48685172" maxx="15.00693449" maxy="54.9211422"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.48685172" miny="6.04452974" maxx="54.9211422" maxy="15.00693449"/>
+        <Style>
+          <Name>behoerden_zone</Name>
+          <Title>Behoerden Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=sicherheitsbehoerden"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>stromleitungen</Name>
+        <Title>Stromleitungen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>stromleitungen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.0378114</westBoundLongitude>
+          <eastBoundLongitude>14.96557347</eastBoundLongitude>
+          <southBoundLatitude>47.39810746</southBoundLatitude>
+          <northBoundLatitude>54.86109241</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.0378114" miny="47.39810746" maxx="14.96557347" maxy="54.86109241"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.39810746" miny="6.0378114" maxx="54.86109241" maxy="14.96557347"/>
+        <Style>
+          <Name>industrie_zone</Name>
+          <Title>Industrie Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=stromleitungen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>temporaere_betriebseinschraenkungen</Name>
+        <Title>Temporäre Betriebseinschränkungen</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.98865807458</westBoundLongitude>
+          <eastBoundLongitude>15.0169958839</eastBoundLongitude>
+          <southBoundLatitude>47.3024876979</southBoundLatitude>
+          <northBoundLatitude>54.983104153</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.98865807458" miny="47.3024876979" maxx="15.0169958839" maxy="54.983104153"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.3024876979" miny="5.98865807458" maxx="54.983104153" maxy="15.0169958839"/>
+        <Style>
+          <Name>luftverkehr_zone</Name>
+          <Title>Luftverkehr Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=temporaere_betriebseinschraenkungen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>umspannwerke</Name>
+        <Title>Umspannwerke</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>umspannwerke</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>6.16406409</westBoundLongitude>
+          <eastBoundLongitude>14.95091252</eastBoundLongitude>
+          <southBoundLatitude>47.49450003</southBoundLatitude>
+          <northBoundLatitude>54.85438736</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="6.16406409" miny="47.49450003" maxx="14.95091252" maxy="54.85438736"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.49450003" miny="6.16406409" maxx="54.85438736" maxy="14.95091252"/>
+        <Style>
+          <Name>industrie_zone</Name>
+          <Title>Industrie Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=umspannwerke"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>vogelschutzgebiete</Name>
+        <Title>Vogelschutzgebiete</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>vogelschutzgebiete</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.94507622</westBoundLongitude>
+          <eastBoundLongitude>15.04184179</eastBoundLongitude>
+          <southBoundLatitude>47.27011138</southBoundLatitude>
+          <northBoundLatitude>55.23178182</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.94507622" miny="47.27011138" maxx="15.04184179" maxy="55.23178182"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.27011138" miny="5.94507622" maxx="55.23178182" maxy="15.04184179"/>
+        <Style>
+          <Name>naturschutzflaechen_zone</Name>
+          <Title>Naturschutzflaechen Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=vogelschutzgebiete"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>windkraftanlagen</Name>
+        <Title>Windkraftanlagen</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>windkraftanlagen</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.74128979</westBoundLongitude>
+          <eastBoundLongitude>14.40044008</eastBoundLongitude>
+          <southBoundLatitude>50.01222096</southBoundLatitude>
+          <northBoundLatitude>55.29560504</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.74128979" miny="50.01222096" maxx="14.40044008" maxy="55.29560504"/>
+        <BoundingBox CRS="EPSG:4326" minx="50.01222096" miny="5.74128979" maxx="55.29560504" maxy="14.40044008"/>
+        <Style>
+          <Name>industrie_zone</Name>
+          <Title>Industrie Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=windkraftanlagen"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>wohngrundstuecke</Name>
+        <Title>Wohngrundstücke</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>wohngrundstuecke</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>5.87264725</westBoundLongitude>
+          <eastBoundLongitude>15.03401779</eastBoundLongitude>
+          <southBoundLatitude>47.31527835</southBoundLatitude>
+          <northBoundLatitude>55.04895506</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="5.87264725" miny="47.31527835" maxx="15.03401779" maxy="55.04895506"/>
+        <BoundingBox CRS="EPSG:4326" minx="47.31527835" miny="5.87264725" maxx="55.04895506" maxy="15.03401779"/>
+        <Style>
+          <Name>siedlung_zone</Name>
+          <Title>Siedlung Zone Style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://uas-betrieb.de/geoservices/dipul/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=wohngrundstuecke"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>
