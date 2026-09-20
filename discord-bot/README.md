@@ -27,6 +27,16 @@ npm run deploy-commands  # registriert /check (mit DISCORD_GUILD_ID: sofort, son
 npm run dev
 ```
 
+## Tests
+
+```bash
+npm test
+```
+
+Reine Unit-Tests für die Link-/Koordinaten-Erkennung (`src/lib/googleMaps.ts`), u.a. mit
+vier realen `maps.app.goo.gl`-Kurzlinks als Fixtures. Keine echten Netzwerkaufrufe
+(Redirects sind gemockt) — DIPUL-WFS/WMS-Anbindung ist noch ungetestet.
+
 ## Docker
 
 ```bash

@@ -39,7 +39,7 @@ async function resolveRedirect(url: string, maxHops = 5): Promise<string> {
 
 // Reihenfolge nach Präzision: exakter Pin (!3d/!4d) vor Kartenmittelpunkt (@lat,lng),
 // da bei Place-Links der Viewport-Mittelpunkt vom eigentlichen Marker abweichen kann.
-function extractCoordsFromUrl(url: string): { lat: number; lng: number } | null {
+export function extractCoordsFromUrl(url: string): { lat: number; lng: number } | null {
   const pinMatch = url.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
   if (pinMatch) {
     return { lat: parseFloat(pinMatch[1]), lng: parseFloat(pinMatch[2]) };
