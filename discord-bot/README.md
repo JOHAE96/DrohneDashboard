@@ -33,9 +33,10 @@ npm run dev
 npm test
 ```
 
-Reine Unit-Tests für die Link-/Koordinaten-Erkennung (`src/lib/googleMaps.ts`), u.a. mit
-vier realen `maps.app.goo.gl`-Kurzlinks als Fixtures. Keine echten Netzwerkaufrufe
-(Redirects sind gemockt) — DIPUL-WFS/WMS-Anbindung ist noch ungetestet.
+Unit-Tests für Link-/Koordinaten-Erkennung (`src/lib/googleMaps.ts`, u.a. mit vier realen
+`maps.app.goo.gl`-Kurzlinks als Fixtures) sowie den DIPUL-WFS-Zonencheck (`src/lib/dipul.ts`:
+Request-Aufbau, Zonen-Auswertung, Fehlerfälle). Keine echten Netzwerkaufrufe, `fetch` ist
+jeweils gemockt — `mapImage.ts` (WMS-Bildgenerierung) ist noch ungetestet.
 
 ## Docker
 

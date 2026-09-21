@@ -1,5 +1,8 @@
 import { EmbedBuilder } from 'discord.js';
-import type { ZoneCheckResult } from './dipul.js';
+import { CONDITIONAL_ZONE_LABELS, type ZoneCheckResult } from './dipul.js';
+
+const CONDITIONAL_FLIGHT_NOTE =
+  '⚠️ Für Verkehrswege gilt die 1:1-Regel: Betrieb ist bedingt möglich, wenn der horizontale Abstand zur Anlage mindestens der Flughöhe entspricht.';
 
 const STATUS_EMOJI: Record<ZoneCheckResult['status'], string> = {
   ok: '✅',
@@ -45,10 +48,12 @@ export function buildZoneEmbed(params: {
     .setFooter({ text: 'Keine Rechtsberatung – Angaben ohne Gewähr, siehe dipul.de' });
 
   if (zoneCheck.zoneNames.length > 0) {
-    embed.spliceFields(1, 0, {
-      name: 'Betroffene Zonen',
-      value: zoneCheck.zoneNames.map((z) => `• ${z}`).join('\n'),
-    });
+    let value = zoneCheck.zoneNames.map((z) => `• ${z}`).join('\n');
+    const hasConditionalZone = zoneCheck.zoneNames.some((z) => CONDITIONAL_ZONE_LABELS.has(z));
+    if (hasConditionalZone) {
+      value += `\n\n${CONDITIONAL_FLIGHT_NOTE}`;
+    }
+    embed.spliceFields(1, 0, { name: 'Betroffene Zonen', value });
   }
 
   return embed;

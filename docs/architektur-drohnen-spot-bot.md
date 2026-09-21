@@ -127,25 +127,55 @@ Kein Thread-Management nötig, keine zusätzlichen Berechtigungen, kein Copy-Pas
 **WMS-Endpoint:** `https://uas-betrieb.de/geoservices/dipul/wms`
 **CRS:** `EPSG:4326` (WGS84 — direkt kompatibel mit Google-Koordinaten)
 
-**Beispiel Point-in-Polygon-Abfrage (WFS GetFeature):**
+**Beispiel Point-in-Polygon-Abfrage (WFS GetFeature), verifiziert in `discord-bot/src/lib/dipul.ts`:**
 
 ```
 GET https://uas-betrieb.de/geoservices/dipul/wfs
   ?service=WFS
   &version=2.0.0
   &request=GetFeature
-  &typeNames=dipul:kontrollzonen,dipul:flugbeschraenkungsgebiete,dipul:naturschutzgebiete,...
+  &typeNames=dipul:kontrollzonen
   &outputFormat=application/json
   &srsName=EPSG:4326
-  &CQL_FILTER=INTERSECTS(geom,POINT({lng} {lat}))
+  &count=1
+  &CQL_FILTER=INTERSECTS(geom,POINT({lat} {lng}))
 ```
 
-⚠️ **Offener Punkt:** Der exakte Name des Geometrie-Attributs (`geom` ist GeoServer-Standard, aber nicht garantiert) muss einmalig per `DescribeFeatureType`-Request pro Layer verifiziert werden. Einzeiliger Test, kein Architekturrisiko.
+✅ **Verifiziert (vormals offene Punkte):**
+- Geometrie-Attribut heißt tatsächlich `geom` (GeoServer-Standard bestätigt).
+- **Achsreihenfolge im `CQL_FILTER` ist `POINT(lat lng)`, nicht `POINT(lng lat)`** — entgegen der ursprünglichen Annahme oben. Dieser WFS-Dienst wertet `POINT()` bei `srsName=EPSG:4326` in der "CRS-konformen" Reihenfolge lat/lon aus, obwohl die zurückgelieferten GeoJSON-Geometrien selbst ganz normal in lng/lat vorliegen. Live gegen die Frankfurt-Kontrollzone (EDDF) getestet: `POINT(lng lat)` lieferte 0 Treffer trotz Punkt mitten in der Zone, `POINT(lat lng)` den korrekten Treffer.
+- ⚠️ **Ein `CQL_FILTER` funktioniert nur mit genau einem `typeNames`-Wert.** Mehrere Layer kommagetrennt in einer Anfrage lässt GeoServer als (ungültigen) Join-Filter fehlschlagen (`ExceptionText: "Extracted invalid join sub-filter ... it uses more than one feature type"`, HTTP 200 mit XML-Fehlerantwort statt JSON). Für einen Multi-Layer-Check sind also N Einzelanfragen nötig (parallel via `Promise.allSettled`), nicht eine kombinierte — siehe `checkZones()`.
+- `dipul:modellflugplaetze` existiert **nicht** als WFS-Feature-Type (`ExceptionText: "Feature type dipul:modellflugplaetze unknown"`), nur als WMS-Layer für die Kartendarstellung.
 
-**Vollständige Layer-Liste (30 Zonen-Typen, `dipul:`-Präfix):**
-`sicherheitsbehoerden`, `bahnanlagen`, `binnenwasserstrassen`, `bundesautobahnen`, `bundesstrassen`, `diplomatische_vertretungen`, `labore`, `ffh-gebiete`, `flugbeschraenkungsgebiete`, `flughaefen`, `flugplaetze`, `freibaeder`, `industrieanlagen`, `internationale_organisationen`, `justizvollzugsanstalten`, `kontrollzonen`, `kraftwerke`, `krankenhaeuser`, `polizei`, `militaerische_anlagen`, `nationalparks`, `naturschutzgebiete`, `behoerden`, `schifffahrtsanlagen`, `seewasserstrassen`, `stromleitungen`, `temporaere_betriebseinschraenkungen`, `inaktive_temporaere_betriebseinschraenkungen`, `umspannwerke`, `vogelschutzgebiete`, `windkraftanlagen`, `wohngrundstuecke`, `modellflugplaetze`
+**Vollständige Layer-Liste laut WFS `GetCapabilities`** (siehe `docs/geoserver-GetCapabilities_application.xml`, 30 tatsächlich per WFS abfragbare Feature-Types, `dipul:`-Präfix):
+`sicherheitsbehoerden`, `bahnanlagen`, `binnenwasserstrassen`, `bundesautobahnen`, `bundesstrassen`, `diplomatische_vertretungen`, `labore`, `ffh-gebiete`, `flugbeschraenkungsgebiete`, `flughaefen`, `flugplaetze`, `freibaeder`, `industrieanlagen`, `internationale_organisationen`, `justizvollzugsanstalten`, `kontrollzonen`, `kraftwerke`, `krankenhaeuser`, `polizei`, `militaerische_anlagen`, `nationalparks`, `naturschutzgebiete`, `behoerden`, `schifffahrtsanlagen`, `seewasserstrassen`, `stromleitungen`, `temporaere_betriebseinschraenkungen`, `umspannwerke`, `vogelschutzgebiete`, `windkraftanlagen`, `wohngrundstuecke`
 
-Für den automatisierten Zonen-Check im Bot reicht vermutlich eine Teilmenge (echte Verbots-/Kontrollzonen: `kontrollzonen`, `flugbeschraenkungsgebiete`, `naturschutzgebiete`, `nationalparks`, `vogelschutzgebiete`, `ffh-gebiete`, `wohngrundstuecke`, `temporaere_betriebseinschraenkungen`, u.a.) — die vollständige Liste wie im bestehenden Dashboard nur für die visuelle Kartendarstellung.
+(`modellflugplaetze` und `inaktive_temporaere_betriebseinschraenkungen` aus der WMS-Kartendarstellung sind hier bewusst ausgenommen — ersteres da nicht als WFS-Feature-Type vorhanden, letzteres da per Definition nicht aktuell gültig und sonst fälschlich als Treffer gemeldet würde.)
+
+Der Bot fragt für den automatisierten Zonen-Check **alle 30 Layer** ab (eine kleinere Teilmenge hatte in der Praxis reale Treffer übersehen, z.B. in `bundesautobahnen`, `krankenhaeuser` oder `militaerische_anlagen`) — dieselbe Liste wie im Dashboard, nur eben pro Layer einzeln statt kombiniert (s.o.).
+
+### 7.1 Bedingt erlaubte Zonen (1:1-Regel)
+
+Nicht alle Treffer bedeuten ein generelles Flugverbot. Für Verkehrswege gilt die "1:1-Regel":
+Betrieb ist bedingt möglich, wenn der horizontale Abstand zur Anlage mindestens der Flughöhe
+entspricht — anders als bei echten Sperrzonen (Kontrollzone, Militär, Krankenhaus, Behörde
+etc.), wo grundsätzlich nicht geflogen werden darf. Betroffene Layer (`CONDITIONAL_ZONE_LABELS`
+in `discord-bot/src/lib/dipul.ts`): `bundesstrassen`, `bahnanlagen`, `bundesautobahnen`,
+`binnenwasserstrassen`, `seewasserstrassen`, `schifffahrtsanlagen` (`stromleitungen` bewusst
+ausgenommen).
+
+Der Gesamtstatus bleibt bei einem Treffer weiterhin `restricted` (🚫) — die Unterscheidung
+ändert nur die Embed-Darstellung: Enthält die Liste der betroffenen Zonen mindestens einen
+dieser Layer, hängt `buildZoneEmbed()` (`discord-bot/src/lib/embed.ts`) einen zusätzlichen
+Hinweistext an das "Betroffene Zonen"-Feld an, z.B.:
+
+```
+• Bundesstraße
+• Bahnanlage
+
+⚠️ Für Verkehrswege gilt die 1:1-Regel: Betrieb ist bedingt möglich, wenn der horizontale
+Abstand zur Anlage mindestens der Flughöhe entspricht.
+```
 
 ## 8. Dashboard-Erweiterung
 
@@ -205,9 +235,9 @@ volumes:
 
 ## 10. Offene Punkte / Nächste Schritte
 
-- [ ] `DescribeFeatureType` je relevantem Layer prüfen → Geometrie-Attributname bestätigen
-- [ ] Exakte Query-Parameter von `maptool-dipul.dfs.de` verifizieren (Live-Seite inspizieren)
+- [x] `DescribeFeatureType` je relevantem Layer prüfen → Geometrie-Attributname bestätigt (`geom`); zusätzlich Achsreihenfolge im `CQL_FILTER` live verifiziert (`POINT(lat lng)`, nicht `lng lat` — siehe Abschnitt 7) und die Ein-Layer-pro-Anfrage-Einschränkung entdeckt
+- [x] Exakte Query-Parameter von `maptool-dipul.dfs.de` verifiziert: kein offizieller Permalink dokumentiert, aber beobachtetes Deep-Link-Format `https://maptool-dipul.dfs.de/geozones/@{lng},{lat}` funktioniert (nicht offiziell dokumentiert, siehe `discord-bot/src/lib/embed.ts`)
 - [ ] SQLite-Backups regeln (z.B. Volume-Snapshot oder Litestream), da einzelne Datei = Single Point of Failure
 - [ ] Umgang mit mehreren Maps-Links in einer Nachricht festlegen
 - [ ] Embed-Design im Discord final abstimmen
-- [ ] `/check`: Antwort ephemeral oder öffentlich im Channel?
+- [x] `/check`: Antwort ephemeral (v1-Entscheidung, siehe `discord-bot/src/commands/check.ts`)
