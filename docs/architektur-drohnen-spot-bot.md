@@ -80,21 +80,44 @@ CREATE TABLE confirmations (
 );
 
 CREATE INDEX idx_confirmations_spot ON confirmations(spot_id);
+
+-- v2: Cache für DIPUL-Zonenprüfungen (nicht im ursprünglichen Entwurf) — getrennt von
+-- `spots`, da ein Cache-Eintrag kein vom Nutzer vorgeschlagener Spot ist. Nur 'ok'/
+-- 'restricted' werden gecacht, nie 'unknown'. lat/lng werden vom Bot vor dem Schreiben auf
+-- 5 Nachkommastellen gerundet (~1,1m), damit nah beieinanderliegende Anfragen denselben
+-- Eintrag treffen.
+CREATE TABLE zone_cache (
+  lat REAL NOT NULL,
+  lng REAL NOT NULL,
+  status TEXT NOT NULL,                -- 'ok' | 'restricted'
+  zone_names TEXT NOT NULL,            -- JSON-Array
+  checked_at TEXT NOT NULL DEFAULT (datetime('now')),
+  PRIMARY KEY (lat, lng)
+);
 ```
 
 **Hinweis zur Datenintegrität:** Da die Bestätigung nicht auf einem echten Login basiert (geteiltes Basic-Auth-Passwort), ist `confirmations` nicht manipulationssicher — für eine kleine, vertrauensbasierte Community eine bewusst akzeptierte Einschränkung.
 
 ## 5. Backend-API — Endpunkte
 
+Implementiert in `backend-api/` (Fastify + `better-sqlite3`), siehe `backend-api/README.md`.
+
 | Methode | Pfad | Zweck |
 |---|---|---|
+| `GET` | `/health` | Liveness-Check |
 | `GET` | `/api/spots` | Alle Spots inkl. Bestätigungs-Anzahl (fürs Dashboard) |
-| `POST` | `/api/spots` | Neuen Spot anlegen (nur vom Bot aufgerufen, internes Netzwerk) |
+| `POST` | `/api/spots` | Neuen Spot anlegen — nur vom automatischen Link-Scan im Bot (`messageCreate`), **nicht** von `/check` |
 | `GET` | `/api/spots/:id` | Einzelner Spot inkl. Bestätigungsliste |
 | `POST` | `/api/spots/:id/confirmations` | Bestätigung hinzufügen (`{ name: string }`) |
 | `GET` | `/api/spots/by-message/:discordMessageId` | Spot über Discord-Message-ID finden (für Context-Menu-Command) |
+| `GET` | `/api/zone-cache?lat=&lng=` | Gecachtes DIPUL-Ergebnis für eine Position, 404 wenn keins vorhanden |
+| `POST` | `/api/zone-cache` | Ergebnis cachen (upsert) — **einziger** DB-Schreibzugriff von `/check` |
 
-Die Bot-internen Calls (`POST /api/spots`, Lookup by-message) laufen im internen Docker-Netzwerk ohne Traefik/Basic-Auth. Die vom Dashboard genutzten Endpunkte laufen hinter Traefik + Basic-Auth wie das Dashboard selbst.
+**v2-Stand:** Die API läuft bisher nur im internen Docker-Netzwerk ohne Traefik/Basic-Auth
+(noch kein Dashboard-Zugriff). `/check` legt bewusst **keinen** Spot an, sondern schreibt nur
+in `zone_cache` — die "echten" Spots (sichtbar im künftigen Dashboard) entstehen ausschließlich
+über den automatischen Link-Scan. Traefik + Basic-Auth für die vom Dashboard genutzten
+Endpunkte folgen mit der Dashboard-Erweiterung (Abschnitt 8).
 
 ## 6. Discord-Bot: Funktionen
 
@@ -102,14 +125,25 @@ Die Bot-internen Calls (`POST /api/spots`, Lookup by-message) laufen im internen
 
 1. Regex-Scan auf Google-Maps-URL-Varianten (`@lat,lng`, `?q=`, `!3d!4d`, Kurzlinks `maps.app.goo.gl/*`)
 2. Kurzlinks per HTTP-Redirect auflösen (`fetch` mit `redirect: 'manual'`, `Location`-Header lesen)
-3. Falls keine Koordinaten im Link (Place-Link) → Google Places API (Place Details) für `geometry.location`
-4. Parallel: DIPUL-Kartenlink bauen + WFS-Zonen-Check (siehe Abschnitt 7)
-5. `POST /api/spots` an Backend-API
-6. Discord-Antwort als Embed: Link zur DIPUL-Karte + ✅/🚫-Kurzstatus + Link zum Dashboard-Eintrag
+3. Koordinaten per Regex direkt aus der (aufgelösten) URL extrahieren — **keine Google Places
+   API** in v1/v2 implementiert (ursprünglich hier geplant). Reicht in der Praxis, da Google-
+   Maps-Links fast immer `@lat,lng` oder `!3d!4d` enthalten; ein reiner Place-Link ganz ohne
+   Koordinaten in der URL kann aktuell nicht aufgelöst werden.
+4. Zonen-Check cache-first: erst `GET /api/zone-cache`, bei Miss die 30-Layer-WFS-Pipeline
+   (Abschnitt 7), Ergebnis danach per `POST /api/zone-cache` ablegen. Parallel: WMS-Kartenbild
+   erzeugen (Abschnitt 7.1/Bot-Implementierung)
+5. `POST /api/spots` an Backend-API — legt den Spot an (unabhängig vom Zonen-Cache)
+6. Discord-Antwort als Embed: WMS-Kartenbild als Anhang, DIPUL-Deep-Link, ✅/🚫/❓-Status
+   (+ 1:1-Regel-Hinweis bei Verkehrswegen, Abschnitt 7.1) — noch **kein** Link zum
+   Dashboard-Eintrag, da das Dashboard Spots noch nicht darstellt (folgt mit Abschnitt 8)
 
 ### 6.2 Slash-Command `/check <link-oder-koordinaten>`
 
-Manueller Zonen-Check ohne Spot anzulegen — nimmt entweder einen Google-Maps-Link oder direkt `lat,lng` als Text-Parameter entgegen, durchläuft dieselbe Resolving- und WFS-Pipeline wie oben, antwortet aber nur (ephemeral oder öffentlich, TBD) mit dem Ergebnis — **kein** DB-Eintrag.
+Manueller Zonen-Check ohne Spot anzulegen — nimmt entweder einen Google-Maps-Link oder direkt
+`lat,lng` als Text-Parameter entgegen, durchläuft dieselbe Resolving- und cache-first
+Zonen-Check-Pipeline wie oben, antwortet ephemeral. **Kein** Eintrag in `spots`; einziger
+DB-Zugriff ist das Zonen-Cache-Lesen/Schreiben (`/api/zone-cache`), identisch zum
+automatischen Link-Scan.
 
 ### 6.3 Message-Context-Menu-Command "Bestätigen"
 
@@ -188,8 +222,13 @@ Abstand zur Anlage mindestens der Flughöhe entspricht.
 
 ## 9. Deployment (VPS)
 
+**v2-Stand:** Das tatsächliche `docker-compose.yml` (Repo-Root) enthält bereits `api` +
+`discord-bot` (internes Netzwerk, `INTERNAL_API_URL=http://api:3000`, `sqlite-data`-Volume),
+aber noch **kein** Traefik und **kein** `dashboard`-Service — das folgt mit der
+Dashboard-Erweiterung (Abschnitt 8). Unten der volle Ziel-Zustand fürs echte VPS-Deployment:
+
 ```yaml
-# docker-compose.yml (Auszug)
+# docker-compose.yml (Ziel-Zustand, Auszug)
 services:
   traefik:
     image: traefik:v3
@@ -231,10 +270,17 @@ volumes:
   sqlite-data:
 ```
 
-`.env` (Bot): `DISCORD_TOKEN`, `GOOGLE_PLACES_API_KEY`, `INTERNAL_API_URL` (z.B. `http://api:3000`), `DIPUL_WFS_URL`
+`.env` (Bot, siehe `discord-bot/.env.example`): `DISCORD_TOKEN`, `DISCORD_CLIENT_ID`,
+`INTERNAL_API_URL` (z.B. `http://api:3000`, optional — ohne läuft der Bot weiter, nur ohne
+Cache/Speicherung), `DIPUL_WFS_URL`/`DIPUL_WMS_URL` (kein `GOOGLE_PLACES_API_KEY`, siehe
+Abschnitt 6.1 Punkt 3).
 
 ## 10. Offene Punkte / Nächste Schritte
 
+- [x] Backend-API (`backend-api/`, Fastify + `better-sqlite3`): `spots`/`confirmations`/`zone_cache`, alle Endpunkte aus Abschnitt 5, Bot per HTTP angebunden (Zonen-Cache in `/check` + automatischem Link-Scan, Spot-Anlage nur im Link-Scan)
+- [ ] Message-Context-Menu-Command "Bestätigen" (Abschnitt 6.3) — noch nicht implementiert
+- [ ] Dashboard-Erweiterung (Abschnitt 8) — Spots-Layer, Popup, Bestätigen-Button
+- [ ] Traefik + Basic-Auth vor der API/dem Dashboard, sobald Punkt oben steht (Abschnitt 9)
 - [x] `DescribeFeatureType` je relevantem Layer prüfen → Geometrie-Attributname bestätigt (`geom`); zusätzlich Achsreihenfolge im `CQL_FILTER` live verifiziert (`POINT(lat lng)`, nicht `lng lat` — siehe Abschnitt 7) und die Ein-Layer-pro-Anfrage-Einschränkung entdeckt
 - [x] Exakte Query-Parameter von `maptool-dipul.dfs.de` verifiziert: kein offizieller Permalink dokumentiert, aber beobachtetes Deep-Link-Format `https://maptool-dipul.dfs.de/geozones/@{lng},{lat}` funktioniert (nicht offiziell dokumentiert, siehe `discord-bot/src/lib/embed.ts`)
 - [ ] SQLite-Backups regeln (z.B. Volume-Snapshot oder Litestream), da einzelne Datei = Single Point of Failure

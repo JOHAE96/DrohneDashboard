@@ -1,6 +1,24 @@
 services:
+  api:
+    build: ./backend-api
+    restart: unless-stopped
+    env_file:
+      - ./backend-api/.env
+    volumes:
+      - "sqlite-data:/data"
+    # Kein Traefik-Routing: läuft erstmal nur im internen Docker-Netzwerk (siehe
+    # docs/architektur-drohnen-spot-bot.md Abschnitt 9 für den späteren VPS-Ausbau mit
+    # Traefik + Basic-Auth, sobald das Dashboard tatsächlich deployt wird).
+
   discord-bot:
     build: ./discord-bot
     restart: unless-stopped
     env_file:
       - ./discord-bot/.env
+    environment:
+      - INTERNAL_API_URL=http://api:3000
+    depends_on:
+      - api
+
+volumes:
+  sqlite-data:

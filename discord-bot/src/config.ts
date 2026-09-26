@@ -13,4 +13,7 @@ export const config = {
   dipulWfsUrl: process.env.DIPUL_WFS_URL ?? 'https://uas-betrieb.de/geoservices/dipul/wfs',
   dipulWmsUrl: process.env.DIPUL_WMS_URL ?? 'https://uas-betrieb.de/geoservices/dipul/wms',
   maxLinksPerMessage: Number(process.env.MAX_LINKS_PER_MESSAGE ?? 3),
+  // Optional: ohne gesetzte URL läuft der Bot weiter, nur ohne Zonen-Cache und ohne
+  // Spot-Speicherung (z.B. lokale Entwicklung ohne laufende backend-api).
+  internalApiUrl: process.env.INTERNAL_API_URL,
 };

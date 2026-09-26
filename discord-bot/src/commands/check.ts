@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, AttachmentBuilder } from 'discord.js';
 import { findGoogleMapsUrls, resolveGoogleMapsUrl, parseRawCoordinates, ResolvedLocation } from '../lib/googleMaps.js';
-import { checkZones } from '../lib/dipul.js';
+import { getZoneCheckCached } from '../lib/zoneCheck.js';
 import { buildZoneMapImage } from '../lib/mapImage.js';
 import { buildZoneEmbed } from '../lib/embed.js';
 
@@ -34,7 +34,9 @@ export async function execute(interaction: ChatInputCommandInteraction): Promise
     return;
   }
 
-  const zoneCheck = await checkZones(location.lat, location.lng);
+  // Schreibt (falls INTERNAL_API_URL gesetzt) nur in den Zonen-Cache — /check legt bewusst
+  // keinen Spot an (siehe docs/architektur-drohnen-spot-bot.md Abschnitt 6.2).
+  const zoneCheck = await getZoneCheckCached(location.lat, location.lng);
   const imageBuffer = await buildZoneMapImage(location.lat, location.lng);
   const attachment = new AttachmentBuilder(imageBuffer, { name: 'dipul-map.png' });
   const embed = buildZoneEmbed({ ...location, zoneCheck });
