@@ -6,7 +6,7 @@
 import { ref, onMounted, defineProps } from "vue";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { setupMap } from "@/helper";
+import { setupMap, loadSpots } from "@/helper";
 const map = ref(null);
 
 const showCamera = false;
@@ -39,6 +39,8 @@ onMounted(async () => {
     imageOverlay.addTo(map.value);
   }
   map.value.fitBounds(latLngBounds);
+
+  loadSpots(map.value);
 });
 </script>
 

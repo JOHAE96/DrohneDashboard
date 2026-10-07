@@ -213,12 +213,29 @@ Abstand zur Anlage mindestens der Flughöhe entspricht.
 
 ## 8. Dashboard-Erweiterung
 
-- **Spots-Layer:** Neue Leaflet-Marker-Layer, geladen per `GET /api/spots` beim Seitenaufruf (kein Live-Sync — Seite neu laden zeigt neue Spots/Bestätigungen, wie gewünscht)
-- **Spot-Popup:** Zeigt `description`, `suggested_by`, Link zu `original_maps_link`, Zonen-Check-Status, sowie Bestätigungs-Button
+Implementiert in `drohne-dashboard/src/helper/spots.js`, eingebunden in `DrohneMap.vue`
+(`onMounted`, nach dem bestehenden WMS-Overlay).
+
+- **Spots-Layer:** `L.circleMarker` (orange) pro Spot aus `GET /api/spots`, geladen beim
+  Seitenaufruf (kein Live-Sync — Seite neu laden zeigt neue Spots/Bestätigungen). Optisch
+  bewusst von den statischen blauen `spotsToFly`-Pin-Markern unterschieden.
+- **Spot-Popup:** Zeigt `description` (Fallback "Vorgeschlagener Spot"), Zonen-Check-Status +
+  betroffene Zonen, `suggestedBy` + Bestätigungs-Anzahl, Link zu `originalMapsLink`, sowie den
+  Bestätigungs-Button. Popup-Inhalt wird per DOM-API (`textContent`) statt HTML-String gebaut,
+  da `description`/`suggestedBy` aus Discord-Nachrichten stammen (nicht vertrauenswürdig) —
+  sonst wäre das eine Stored-XSS-Lücke im Dashboard.
 - **"War ich da fliegen"-Mechanismus** (kein echter Login, da geteiltes Basic-Auth-Passwort):
   1. Erstes Bestätigen → Prompt nach Anzeigename, gespeichert in `localStorage`
   2. Bestätigte Spot-IDs zusätzlich in `localStorage` gemerkt → Button wird für diesen Browser deaktiviert
   3. `POST /api/spots/:id/confirmations` mit `{ name }`
+- **API-Zugriff:** `VUE_APP_API_URL` (Vue-CLI-Präfix nötig fürs Client-Bundle), Default
+  `http://localhost:3000` für lokale Entwicklung (siehe `drohne-dashboard/.env.example`).
+  Backend-API hat dafür CORS mit `origin: true` aktiviert (`@fastify/cors`) — unkritisch,
+  solange die API nicht öffentlich erreichbar ist; vor echtem Deployment einschränken.
+- **Scope-Entscheidung:** Nur für lokale Entwicklung gebaut (Dashboard-Dev-Server + API lokal).
+  Das Dashboard wird laut CI aktuell auf GitHub Pages deployt (statisch), die API laut Doc auf
+  einem separaten VPS — bis beides über eine gemeinsame, öffentlich erreichbare Konfiguration
+  läuft (Traefik o.ä.), zeigt die live auf GitHub Pages gehostete Seite noch keine Spots an.
 
 ## 9. Deployment (VPS)
 
@@ -279,8 +296,8 @@ Abschnitt 6.1 Punkt 3).
 
 - [x] Backend-API (`backend-api/`, Fastify + `better-sqlite3`): `spots`/`confirmations`/`zone_cache`, alle Endpunkte aus Abschnitt 5, Bot per HTTP angebunden (Zonen-Cache in `/check` + automatischem Link-Scan, Spot-Anlage nur im Link-Scan)
 - [ ] Message-Context-Menu-Command "Bestätigen" (Abschnitt 6.3) — noch nicht implementiert
-- [ ] Dashboard-Erweiterung (Abschnitt 8) — Spots-Layer, Popup, Bestätigen-Button
-- [ ] Traefik + Basic-Auth vor der API/dem Dashboard, sobald Punkt oben steht (Abschnitt 9)
+- [x] Dashboard-Erweiterung (Abschnitt 8) — Spots-Layer, Popup, Bestätigen-Button; nur für lokale Entwicklung (Dashboard-Dev-Server + API lokal, CORS `origin: true`), noch nicht für das öffentlich auf GitHub Pages deployte Dashboard
+- [ ] Traefik + Basic-Auth vor der API/dem Dashboard, sobald ein echtes gemeinsames Deployment ansteht (Abschnitt 9) — inkl. CORS auf konkrete Origin einschränken statt `origin: true`
 - [x] `DescribeFeatureType` je relevantem Layer prüfen → Geometrie-Attributname bestätigt (`geom`); zusätzlich Achsreihenfolge im `CQL_FILTER` live verifiziert (`POINT(lat lng)`, nicht `lng lat` — siehe Abschnitt 7) und die Ein-Layer-pro-Anfrage-Einschränkung entdeckt
 - [x] Exakte Query-Parameter von `maptool-dipul.dfs.de` verifiziert: kein offizieller Permalink dokumentiert, aber beobachtetes Deep-Link-Format `https://maptool-dipul.dfs.de/geozones/@{lng},{lat}` funktioniert (nicht offiziell dokumentiert, siehe `discord-bot/src/lib/embed.ts`)
 - [ ] SQLite-Backups regeln (z.B. Volume-Snapshot oder Litestream), da einzelne Datei = Single Point of Failure

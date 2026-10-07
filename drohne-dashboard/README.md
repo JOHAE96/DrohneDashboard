@@ -8,6 +8,19 @@ visualize No FlyZones and NOTAMS on a map
 npm install
 ```
 
+### Bot-Spots anzeigen (backend-api)
+
+Die Karte zeigt zusätzlich zu den statischen `spotsToFly` die per Discord-Bot vorgeschlagenen
+Spots aus der `backend-api` (`../backend-api/`) an — dafür muss diese lokal laufen:
+
+```
+cd ../backend-api && npm install && npm run dev
+```
+
+Läuft die API nicht auf dem Default `http://localhost:3000`, `VUE_APP_API_URL` setzen (siehe
+`.env.example` → nach `.env.local` kopieren). Ist die API nicht erreichbar, wird das nur in der
+Browser-Konsole geloggt — die restliche Karte (Zonen-Layer, `spotsToFly`) funktioniert trotzdem.
+
 ### Compiles and hot-reloads for development
 
 ```
@@ -25,6 +38,16 @@ npm run build
 ```
 npm run lint
 ```
+
+### Tests
+
+```
+npm test
+```
+
+Vitest + jsdom für `src/config.js` und `src/helper/spots.js` (Bot-Spots-Layer: Popup-Inhalt,
+Bestätigen-Button inkl. `localStorage`-Flow, Fehlerfälle). `leaflet` und `@/config` sind
+gemockt, keine echten Netzwerk-/Kartenzugriffe.
 
 ### Customize configuration
 
